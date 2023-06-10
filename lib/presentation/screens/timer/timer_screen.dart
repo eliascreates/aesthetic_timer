@@ -14,8 +14,9 @@ class TimerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<TimerBloc>(
       create: (context) => TimerBloc(timerTicker: TimerTicker()),
-      child: const Scaffold(
-        body: TimerView(),
+      child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        body: const TimerView(),
       ),
     );
   }
@@ -29,7 +30,7 @@ class TimerView extends StatelessWidget {
     return Stack(
       alignment: Alignment.center,
       children: [
-        const TimerBackground(),
+        const Center(child: TimerBackground()),
         const Positioned(
           top: 100,
           child: TimerText(),
@@ -47,11 +48,7 @@ class TimerView extends StatelessWidget {
                     return FloatingActionButton(
                       onPressed: () =>
                           context.read<TimerBloc>().add(const TimerPaused()),
-                      backgroundColor: const Color(0xff6a161e),
-                      child: const Icon(
-                        Icons.pause_rounded,
-                        size: 40,
-                      ),
+                      child: const Icon(Icons.pause_rounded, size: 40),
                     );
                   } else {
                     return FloatingActionButton(
@@ -62,7 +59,9 @@ class TimerView extends StatelessWidget {
                                     ? TimerStarted(duration: state.duration)
                                     : const TimerResumed(),
                               ),
-                      backgroundColor: const Color(0xff6a161e),
+                      backgroundColor: state is TimerRunComplete
+                          ? Theme.of(context).colorScheme.secondary
+                          : null,
                       child: const Icon(
                         Icons.play_arrow_rounded,
                         size: 40,
@@ -75,7 +74,6 @@ class TimerView extends StatelessWidget {
               FloatingActionButton(
                 onPressed: () =>
                     context.read<TimerBloc>().add(const TimerReset()),
-                backgroundColor: const Color(0xff6a161e),
                 child: const Icon(
                   Icons.replay_rounded,
                   size: 30,

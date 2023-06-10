@@ -1,3 +1,4 @@
+import 'package:aesthetic_timer/core/themes/timer_theme.dart';
 import 'package:aesthetic_timer/presentation/screens/timer/timer_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,10 +15,12 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Aesthetic Timer',
-      home: TimerScreen(),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      home: const TimerScreen(),
     );
   }
 }
